@@ -1,0 +1,4 @@
+---
+- name: Retrieve from Hashicorp Vault
+  ansible.builtin.set_fact:
+    vault_facts_root_password_temp: "{{ lookup('community.hashi_vault.hashi_vault', vault_base_path + '/aaa:zzz') }}"
