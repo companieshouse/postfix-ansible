@@ -1,0 +1,26 @@
+---
+- name: Create SASL password file
+  ansible.builtin.copy:
+    dest: /etc/postfix/sasl_passwd
+    content: "[{{ ses_smtp_endpoint }}]:{{ ses_smtp_port }} {{ ses_smtp_username }}:{{ ses_smtp_password }}\n"
+    owner: root
+    group: root
+    mode: "0600"
+  no_log: true
+  notify:
+    - Regenerate sasl_passwd hash
+    - Reload postfix
+
+- name: Ensure SASL password database exists
+  ansible.builtin.shell:
+    cmd: umask 0177 && postmap hash:/etc/postfix/sasl_passwd
+    creates: /etc/postfix/sasl_passwd.db
+  notify:
+    - Reload postfix
+
+- name: Ensure SASL password database permissions
+  ansible.builtin.file:
+    path: /etc/postfix/sasl_passwd.db
+    owner: root
+    group: root
+    mode: "0600"
