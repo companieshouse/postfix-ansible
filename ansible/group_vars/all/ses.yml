@@ -1,6 +1,6 @@
 ---
 ses_smtp_endpoint: email-smtp.eu-west-2.amazonaws.com
 ses_smtp_port: 587
-ses_vault_data: "{{ lookup('hashi_vault', vault_base_path + 'ses') }}"
-ses_smtp_username: "{{ ses_vault_data.smtp_username }}"
-ses_smtp_password: "{{ ses_vault_data.smtp_password }}"
+ses_credentials: "{{ lookup('hashi_vault', vault_base_path + '/ses') }}"
+ses_smtp_username: "{{ ses_credentials.smtp_username }}"
+ses_smtp_password: "{{ ses_credentials.smtp_password }}"
