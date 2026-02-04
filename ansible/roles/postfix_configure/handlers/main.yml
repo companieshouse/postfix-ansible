@@ -1,0 +1,9 @@
+---
+- name: Regenerate sasl_passwd hash
+  ansible.builtin.shell:
+    cmd: umask 0177 && postmap hash:/etc/postfix/sasl_passwd
+
+- name: Reload postfix
+  ansible.builtin.systemd:
+    name: postfix
+    state: reloaded
