@@ -6,7 +6,7 @@ regions:
 
 filters:
   tag:Name: "${INSTANCE_NAME}"
-  tag:PostfixServer: true
+  tag:Service: postfix
 
 keyed_groups:
   - key: tags
