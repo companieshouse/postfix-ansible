@@ -1,7 +1,19 @@
 ---
+- name: Get IMDSv2 token
+  ansible.builtin.uri:
+    url: http://169.254.169.254/latest/api/token
+    method: PUT
+    headers:
+      X-aws-ec2-metadata-token-ttl-seconds: "300"
+    return_content: true
+  register: imds_token
+  changed_when: false
+
 - name: Get instance ID
   ansible.builtin.uri:
     url: http://169.254.169.254/latest/meta-data/instance-id
+    headers:
+      X-aws-ec2-metadata-token: "{{ imds_token.content }}"
     return_content: true
   register: instance_facts_instance_id_result
   changed_when: false
@@ -9,6 +21,8 @@
 - name: Get instance Region
   ansible.builtin.uri:
     url: http://169.254.169.254/latest/meta-data/placement/region
+    headers:
+      X-aws-ec2-metadata-token: "{{ imds_token.content }}"
     return_content: true
   register: instance_facts_instance_region_result
   changed_when: false
