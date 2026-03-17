@@ -1,4 +1,4 @@
 ---
 - name: Retrieve SES details from Hashicorp Vault
   ansible.builtin.set_fact:
-    vault_facts_ses: "{{ lookup('hashi_vault', vault_base_path + '/ses') }}"
+    vault_ses: "{{ lookup('hashi_vault', vault_base_path + '/ses') }}"
