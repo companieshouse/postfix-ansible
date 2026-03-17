@@ -5,7 +5,7 @@ regions:
   - "${AWS_REGION}"
 
 filters:
-  tag:Name: "${INSTANCE_NAME}"
+  tag:Name: "${INSTANCE_NAME}-?"
   tag:Service: postfix
 
 keyed_groups:
